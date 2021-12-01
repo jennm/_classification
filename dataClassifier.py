@@ -75,10 +75,48 @@ def enhancedFeatureExtractorDigit(datum):
 
     ##
     """
-    features =  basicFeatureExtractorDigit(datum)
+    # features =  basicFeatureExtractorDigit(datum)
+    features = util.Counter()
+    # for x in range(DIGIT_DATUM_WIDTH):
+    #     for y in range(DIGIT_DATUM_HEIGHT):
+    #         features[(x, y)] += datum.getPixel(x, y)#, (x, y)]
+    
+    for y in range(DIGIT_DATUM_HEIGHT):
+        # was_white = False
+        # count = 0
+        # features[y] = list()
+        for x in range(DIGIT_DATUM_WIDTH):
+        #     if datum.getPixel(x, y) == 0:
+        #         count += 1
+        #         # if not was_white:
+        #         #     features[y].append(count)
+        #         #     count = 0
+        #         # else:
+        #         #     count += 1
+        #         # was_white = True
+        #     else:
+        #         features[y].append(count)
+        #         count = 0
+        # features[y].append(count)
+            features[(x, y)] += datum.getPixel(x, y) 
+            if x - 1 >= 0:
+                features[(x, y)] += datum.getPixel(x - 1, y)
+            if y - 1 >= 0:
+                features[(x, y - 1)] += datum.getPixel(x, y - 1)
+            if x + 1 < DIGIT_DATUM_WIDTH:
+                features[(x, y)] += datum.getPixel(x + 1, y)
+            if y + 1 < DIGIT_DATUM_HEIGHT:
+                features[(x, y)] += datum.getPixel(x, y + 1)
+            # if datum.getPixel(x, y) > 0:
+            #     features[(x,y)] += 1
+            # else:
+            #     features[(x,y)] = 0
+    # features2 = basicFeatureExtractorFace(datum)
+
+    # print datum
 
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    # util.raiseNotDefined()
 
     return features
 
@@ -124,7 +162,7 @@ def enhancedPacmanFeatures(state, action):
     """
     features = util.Counter()
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    # util.raiseNotDefined()
     return features
 
 
