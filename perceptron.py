@@ -37,174 +37,58 @@ class PerceptronClassifier:
         assert len(weights) == len(self.legalLabels);
         self.weights = weights;
 
-    def train( self, trainingData, trainingLabels, validationData, validationLabels ):
+    def train(self, input_train_data, label_train_data, input_val_data, label_val_data):
         """
-        The training loop for the perceptron passes through the training data several
-        times and updates the weight vector for each label based on classification errors.
-        See the project description for details.
+        Question 1: Implement the multi-class version of the perceptron algorithm
+
+        Args:
+            input_train_data: list of util.Counters
+            label_train_data: list of integers (representing the labels) of the same length as input_train_data
+            input_val_data: list of util.Counters
+            label_val_data: list of integers (representing the labels) of the same length as input_val_data
+            iterations: number of iterations to pass over all the dataset
+            callback: callback function for plotting
+
+        The training loop for the perceptron passes through the training data
+        several times and updates the weight vector for each label based on
+        classification errors. See the project description for details.
 
         Use the provided self.weights[label] data structure so that
         the classify method works correctly. Also, recall that a
         datum is a counter from features to values for those features
         (and thus represents a vector a values).
+
+        You don't need to use the validation data (input_val_data, label_val_data)
+        for this question, but it is provided in case you want to check the
+        accuracy on the validation data.
+
+        Useful method:
+        self.classify(...)
         """
 
-        self.features = trainingData[0].keys() # could be useful later
         # DO NOT ZERO OUT YOUR WEIGHTS BEFORE STARTING TRAINING, OR
         # THE AUTOGRADER WILL LIKELY DEDUCT POINTS.
-
-        # self.classify([])
-        # print "training data", len(trainingData[0].keys())
-        # print "labels", trainingLabels
-        # print "validation data", validationData
-        # print "validation labels", validationLabels
-        # print "features", self.features
-        # print "weights", self.weights
-        # return
-
-
-        self.score = util.Counter()
-        for f in self.features:
-            self.score[f] = util.Counter()
-            for y in range(len(self.weights)):
-                self.score[f][y] = list()
-        # self.score = [util.Counter()] * len(self.features)
-
         for iteration in range(self.max_iterations):
-            # print "Starting iteration ", iteration, "..."
-            # guesses = self.classify(trainingData)
-            # print guesses
-            for i in range(len(trainingData)):
+            print "Starting iteration ", iteration, "..."
+            # print input_train_data[0]
+            # for i in range(len(input_train_data)):
+            # score = util.Counter()
+            # for k in self.weights.keys():
 
-                # print list(trainingData[i])
-                features = trainingData[i].keys()
-                for feature in features:
-                    self.weights[trainingData[i][feature]][feature] += 1 
-
-            classified = self.classify(trainingData)
-            # print len(classified)
-            # print len(features)
-            for j in range(len(classified)):
-                # print trainingData[i][features[j]]
-                if classified[j] == trainingLabels[j]:
-                    continue
-                else:
-                    feat_weight = trainingLabels[j]
-                    # print features[i]
-                    for k in range(len(self.weights[trainingLabels[j]])):
-                        self.weights[trainingLabels[j]][k] += feat_weight
-                    for k in range(len(self.weights[classified[j]])):
-                        self.weights[classified[j]][k] -= feat_weight
-                        # print "else"
-
-            # self.classify()
-                # max_guesses = self.classify(list(trainingData[i]))
-                # print len(list())
-                # print max_guesses
-
-                # for feature in self.features:
-                #     score = list()
-                #     for y in range(len(self.weights)):
-                #         tmp = 0
-                #         # for 
-                #         # score.
-                # # print len(self.weights)
-                # return
-
-                # break
-                
-
-
-
-                # pass
-                # guesses = self.classify(trainingData[i])
-                # print guesses
-
-
-
-                # for y in range(len(self.weights)):
-
-                #     for feature in self.features:
-                #         tmp = 0
-                #         for i in range(len(feature)):
-                #             tmp += feature[i] * self.weights[y][i]
-
-                #         # print self.score[feature][y]
-                #         # if self.score[feature][y] == 0:
-                #         #     self.score[feature][y] = [tmp]
-                #         # else:
-                #         self.score[feature][y].append(tmp)
-
-                    # print self.score
-                    # print self.features
-                    # print self.weights
-                    # tmp = 0
-                    # for index in range(len(self.features[y])):
-                    #     tmp += self.features[y][index] * self.weights[y][index]
-                    # self.score[y][self.features[y]] = tmp
-                    # self.score[y][self.features[i]] += self.features[i] * self.weights[y] 
-                # "*** YOUR CODE HERE ***"
-                    # util.raiseNotDefined()
-            return
-            # print self.weights
-            max_y = -1
-            print self.weights
-            for feature in self.features:
-                max_score = self.score[feature][0]
-                max_y = 0
-                for y in range(len(self.weights)):
-                    for s in self.score[feature][y]:
-                        if s > max_score:
-                            max_score = s
-                            max_y = y
-                for y in range(len(self.weights)):
-
-                    # if max_y < 0:
-                    #     for s in self.score[feature][y]:
-                    #         if s > max_score:
-                    #             max_score = s
-                    #             max_y = y
-
-                    # print "pre", feature
-                    if y == max_y:# or max_y < 0:
-                        continue
-                    # print feature
-                    for index in range(len(feature)):
-                        # print feature
-                        self.weights[y][index] += feature[i]
-                        self.weights[max_y][index] -= feature[i]
-
-            print self.weights
-            return self.weights
-
-
-
-        # for y in range(len(self.weights)):
-        #     max = 0
-        #     feat = 0
-        #     for i in range(len(trainingData)):
-        #         tmp = self.score[y][self.features[i]]
-        #         if tmp > max:
-        #             max = tmp
-        #             feat = i
             
-        #     for i in range(len(trainingData)):
-        #         print "hi", i
-        #         if i == feat:
-        #             continue
-        #         # print self.weights
-        #         # if self.weights[i] == 0:
-        #         #     self.weights[i] = self.features[i]
-        #         # else:
-        #         for index in range(len(self.features[i])):
-        #             self.weights[y][index] += self.features[i][index]
-        #             # self.weights[i] += self.features[i]
-        #         # if self.weights[feat] == 0:
-        #         #     self.weights[feat] = -1 * self.features[i]
-        #         # else:
-        #         for index in range(len(self.features[i])):
-        #             self.weights[y][index] -= self.features[i][index]
-                    
+            for i in range(len(input_train_data)):
+
+                score = util.Counter()
+                for weight in self.weights.keys():
+                    score[weight] = self.weights[weight] * input_train_data[i]
+
+                max_y = score.argMax()
+
+                if max_y != label_train_data[i]:
+                    self.weights[label_train_data[i]] += input_train_data[i]
+                    self.weights[max_y] -= input_train_data[i]
+
+
     def classify(self, data ):
         """
         Classifies each datum as the label that most closely matches the prototype vector
@@ -212,6 +96,7 @@ class PerceptronClassifier:
 
         Recall that a datum is a util.counter...
         """
+        # print data
         guesses = []
         for datum in data:
             vectors = util.Counter()
