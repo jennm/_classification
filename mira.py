@@ -61,7 +61,44 @@ class MiraClassifier:
         representing a vector of values.
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        print Cgrid
+        print len(trainingData)
+        for c in range(len(Cgrid)):
+            for i in range(len(trainingData)):
+
+                score = util.Counter()
+                for weight in self.weights.keys():
+                    score[weight] = trainingData[i] * self.weights[weight]
+
+                y_prime = score.argMax()
+                # print y_prime
+
+                if y_prime != trainingLabels[i]:
+                    # print "!="
+                    # min_gamma = 0
+                    # for weight in self.weights.keys():
+                    #     g = (self.weights[])
+                    gamma = ((self.weights[y_prime] - self.weights[trainingLabels[i]]) * trainingData[i] + 1) / (2 * self.magnitude(trainingData[i]))
+                    if gamma == 0 or gamma > Cgrid[c]:
+                        gamma = Cgrid[c]
+                    # print gamma
+                    self.weights[trainingLabels[i]] += trainingData[i]
+                    self.weights[y_prime] -= trainingData[i]
+                    # for key in self.weights[trainingLabels[i]].keys():
+                    #     self.weights[trainingLabels[i]][key] += gamma * trainingData[i]#self.weights[trainingLabels[i]]
+                    # for key in self.weights[y_prime].keys():
+                    #     self.weights[y_prime][key] -= gamma * trainingData[i]
+
+                # self.weights[trainingLabels[i]] += gamma * self.weights[trainingLabels[i]]#.divideAll(1 / Cgrid[c])
+                # self.weights[y_prime] -= gamma * self.weights[trainingLabels[i]]#.divideAll(1)# / Cgrid[c])
+
+        # util.raiseNotDefined()
+    def magnitude(self, vector):
+        sum = 0
+        for parameter in vector.keys():
+            sum += vector[parameter] ** 2
+        
+        return sum
 
     def classify(self, data ):
         """
